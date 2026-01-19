@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | Premium View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #e0e5ec;
+            --accent: #6c5ce7;
+            --text: #2d3436;
+            --white: #ffffff;
+            --shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--main-bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .product-card {
+            background: var(--main-bg);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Mahsulot nomi va ikonkasi */
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: var(--main-bg);
+            box-shadow: inset 6px 6px 12px #b8b9be, inset -6px -6px 12px #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Ma'lumotlar bloki */
+        .data-container {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .info-item:last-child { margin-bottom: 0; }
+
+        .info-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #a0a0a0;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .price-big {
+            font-size: 26px;
+            color: #27ae60;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Tugmalar */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px;
+            border-radius: 15px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-update {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-update:hover {
+            background-color: #5b4bc4;
+            transform: scale(1.02);
+        }
+
+        .btn-delete {
+            background-color: transparent;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+        }
+
+        .btn-delete:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .back-btn {
+            margin-top: 25px;
+            display: inline-block;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0.6;
+        }
+
+        .back-btn:hover { opacity: 1; }
+
+    </style>
+</head>
+<body>
+
+    <div class="product-card">
+        <div class="icon-box">📦</div>
+        <h1>{{ product.name }}</h1>
+
+        <div class="data-container">
+            <div class="info-item">
+                <span class="info-label">Kategoriya</span>
+                <span class="info-value">{{ product.category }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Ombordagi qoldiq</span>
+                <span class="info-value">{{ product.quantity }} dona</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Narxi</span>
+                <span class="info-value price-big">{{ product.price }} so'm</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'update_product' product.id %}" class="btn btn-update">Tahrirlash rejimiga o'tish</a>
+            <a href="{% url 'delete_product' product.id %}"
+               onclick="return confirm('Haqiqatdan o’chirilsinmi?')"
+               class="btn btn-delete">Mahsulotni o'chirish</a>
+        </div>
+
+        <a href="{% url 'index' %}" class="back-btn">← ORQAGA QAYTISH</a>
+    </div>
+
+</body>
+</html>

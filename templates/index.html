@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahsulotlar Paneli</title>
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --primary: #4e73df;
+            --secondary: #858796;
+            --success: #1cc88a;
+            --info: #36b9cc;
+            --warning: #f6c23e;
+            --danger: #e74a3b;
+            --dark: #5a5c69;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Yuqori qism */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), #224abe);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 20px rgba(78, 115, 223, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .header h1 { margin: 0; font-size: 28px; letter-spacing: 1px; }
+
+        .btn-add {
+            background: white;
+            color: var(--primary);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-add:hover {
+            transform: scale(1.05);
+            background: var(--light);
+        }
+
+        /* Kartochkalar to'plami */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border-left: 5px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: rgba(78, 115, 223, 0.1);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .product-name {
+            font-size: 20px;
+            color: var(--dark);
+            margin: 0 0 10px 0;
+            display: block;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .price-box {
+            font-size: 18px;
+            color: var(--success);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            background: #f8f9fc;
+            padding: 15px 20px;
+            border-top: 1px solid #e3e6f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-view {
+            color: var(--info);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .quantity {
+            font-size: 13px;
+            color: var(--secondary);
+        }
+
+        /* Bo'sh holat uchun */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            background: white;
+            border-radius: 15px;
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>📦 Ombor Menejeri</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.8;">Barcha mahsulotlarni nazorat qiling</p>
+        </div>
+        <a href="{% url 'create_product' %}" class="btn-add">➕ Yangi Mahsulot</a>
+    </div>
+
+    <div class="grid">
+        {% for i in products %}
+        <div class="card" style="border-left-color: {% cycle '#4e73df' '#1cc88a' '#36b9cc' '#f6c23e' %};">
+            <div class="card-body">
+                <span class="category-badge">{{ i.category }}</span>
+                <a href="{% url 'detail' i.id %}" class="product-name">{{ i.name }}</a>
+                <div class="price-box">{{ i.price }} so'm</div>
+            </div>
+            <div class="card-footer">
+                <span class="quantity">📦 Qoldiq: <strong>{{ i.quantity }}</strong> ta</span>
+                <a href="{% url 'detail' i.id %}" class="btn-view">Batafsil →</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <h2>Hozircha hech narsa yo'q 😕</h2>
+            <p>Yangi mahsulot qo'shish uchun yuqoridagi tugmani bosing.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

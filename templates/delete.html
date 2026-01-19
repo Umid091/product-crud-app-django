@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>O'chirishni tasdiqlash</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 100px; }
+        .confirm-box { border: 1px solid #ccc; display: inline-block; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .btn-yes { background: red; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-no { background: gray; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="confirm-box">
+        <h2>Mahsulotni o'chirasizmi?</h2>
+        <p>Rostdan ham "<strong>{{ product.name }}</strong>"ni o'chirmoqchimisiz?</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <a href="{% url 'detail' product.id %}" class="btn-no">Yo'q, bekor qilish</a>
+            <button type="submit" class="btn-yes">Ha, o'chirilsin</button>
+        </form>
+    </div>
+
+</body>
+</html>
